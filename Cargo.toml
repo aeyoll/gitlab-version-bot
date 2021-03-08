@@ -5,6 +5,7 @@ authors = ["Jean-Philippe Bidegain <jp@bidega.in>"]
 description = "Post a message to a Rocket.Chat webbook if a Gitlab instance needs to be updated."
 edition = "2018"
 license = "MIT"
+repository = "https://github.com/aeyoll/gitlab-version-bot"
 
 [dependencies]
 ureq = { version = "*", features = ["json"] }
