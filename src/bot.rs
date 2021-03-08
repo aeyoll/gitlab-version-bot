@@ -21,7 +21,7 @@ pub struct Bot {
 
 impl Bot {
     /// Fetch the gitlab version from the gitlab API.
-    fn get_version(self: &Self) -> Result<GitlabVersion, Error> {
+    fn get_version(&self) -> Result<GitlabVersion, Error> {
         let url = format!("{}/api/v4/version", &self.gitlab_url);
         debug!("Calling api: {}", url);
 
@@ -34,7 +34,7 @@ impl Bot {
     }
 
     /// Post a message to Rocket Chat.
-    fn publish_message(self: &Self, message: &String) -> Result<(), Error> {
+    fn publish_message(&self, message: &str) -> Result<(), Error> {
         debug!("Publishing message: {}", message);
 
         let request_url = format!(
@@ -51,7 +51,7 @@ impl Bot {
     }
 
     /// The bot process.
-    pub fn exec(self: &Self) -> Result<(), Error> {
+    pub fn exec(&self) -> Result<(), Error> {
         debug!("Using api url: {}", self.gitlab_url);
         debug!("Using api token: {}", self.gitlab_token);
         debug!("Using rocket chat url: {}", self.rocket_chat_token);

@@ -28,10 +28,10 @@ impl GitlabTag {
 
         let mut stable_tags = tags
             .into_iter()
-            .filter(|tag| tag.name.contains("rc") == false)
+            .filter(|tag| !tag.name.contains("rc"))
             .map(|tag| GitlabVersion::new(tag.name.replace("v", "")));
 
-        let latest_version = stable_tags.nth(0).unwrap();
+        let latest_version = stable_tags.next().unwrap();
 
         Ok(latest_version)
     }

@@ -37,10 +37,10 @@ fn app() -> Result<(), Error> {
     let rocket_chat_token = matches.value_of("rocket_chat_token").unwrap().to_string();
 
     let bot = Bot {
-        gitlab_url: gitlab_url,
-        gitlab_token: gitlab_token,
-        rocket_chat_url: rocket_chat_url,
-        rocket_chat_token: rocket_chat_token
+        gitlab_url,
+        gitlab_token,
+        rocket_chat_url,
+        rocket_chat_token,
     };
     bot.exec()?;
 
