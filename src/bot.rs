@@ -35,9 +35,10 @@ pub struct Bot {
 impl Bot {
     /// Fetch the gitlab version from the gitlab API.
     fn get_version(self: &Self) -> Result<GitlabVersion, Error> {
-        info!("Calling api: {}", self.api);
+        let url = format!("{}/api/v4/version", &self.api);
+        debug!("Calling api: {}", url);
 
-        let version: GitlabVersion = ureq::get(&self.api)
+        let version: GitlabVersion = ureq::get(&url)
             .set("PRIVATE-TOKEN", &self.gitlab_token)
             .call()?
             .into_json()?;
@@ -47,7 +48,7 @@ impl Bot {
 
     /// Post a message to Rocket Chat.
     fn publish_message(self: &Self, message: &String) -> Result<(), Error> {
-        info!("Publishing message: {}", message);
+        debug!("Publishing message: {}", message);
 
         let request_url = format!(
             "https://discuss.kaizen-hosting.com/hooks/{token}",
@@ -65,9 +66,9 @@ impl Bot {
 
     /// The bot process.
     pub fn exec(self: &Self) -> Result<(), Error> {
-        info!("Using api url: {}", self.api);
-        info!("Using api token: {}", self.gitlab_token);
-        info!("Using rocket token: {}", self.rocket_token);
+        debug!("Using api url: {}", self.api);
+        debug!("Using api token: {}", self.gitlab_token);
+        debug!("Using rocket token: {}", self.rocket_token);
 
         let version = self.get_version()?;
         info!("Found version: {}", version);
