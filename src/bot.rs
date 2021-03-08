@@ -20,6 +20,12 @@ impl fmt::Display for GitlabVersion {
     }
 }
 
+impl std::cmp::PartialEq for GitlabVersion {
+    fn eq(&self, other: &Self) -> bool {
+        self.version == other.version
+    }
+}
+
 #[derive(Deserialize)]
 struct GitlabTag {
     name: String,
@@ -105,10 +111,13 @@ impl Bot {
         let version = self.get_version()?;
         info!("Current Gitlab version is {}", version);
 
-        // if version.len() != 0 {
-        // message = format!("Aujourd'hui, {api_message}", api_message = message);
-        // self.publish_message(&message)?;
-        // }
+        if gitlab_latest_version != version {
+            let message = format!(
+                "La version de Gitlab ({}) n'est plus à jour, {} est disponible",
+                version, gitlab_latest_version
+            );
+            self.publish_message(&message)?;
+        }
 
         Ok(())
     }
