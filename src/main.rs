@@ -6,11 +6,13 @@ extern crate clogger;
 #[macro_use]
 extern crate log;
 
-use crate::bot::Bot;
 use failure::Error;
 use std::process;
 
+use crate::bot::Bot;
 mod bot;
+mod gitlab_tag;
+mod gitlab_version;
 
 fn app() -> Result<(), Error> {
     let yaml = load_yaml!("cli.yml");
