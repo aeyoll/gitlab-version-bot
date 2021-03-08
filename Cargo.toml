@@ -1,9 +1,14 @@
 [package]
 name = "gitlab-version-bot"
 version = "0.1.0"
-authors = ["Jean-Philippe Bidegain <jp@bidega.in>"]
+authors = ["Jean-Philippe Bidegain <jean-philippe@kaizen-developments.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ureq = { version = "*", features = ["json"] }
+clap = { version = "2.33", features = ["yaml"]}
+log = { version = "0.4" }
+clogger = { version = "0.1" }
+serde = { version = "1.0", features = ["derive"] }

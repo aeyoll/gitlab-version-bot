@@ -1,0 +1,27 @@
+name: gitlab-version-bot
+author: Jean-Philippe Bidegain <jean-philippe@kaizen-developments.com>
+about: Publish a message when Gitlab needs to be updated
+args:
+    - verbose:
+        long: verbose
+        short: v
+        help: "Be verbose during process"
+    - debug:
+        short: d
+        long: debug
+        help: "Print additional debug information"
+    - api:
+        required: true
+        takes_value: true
+        multiple: false
+        index: 1
+    - gitlab_token:
+        required: true
+        takes_value: true
+        multiple: false
+        index: 2
+    - rocket_token:
+        required: true
+        takes_value: true
+        multiple: false
+        index: 3
