@@ -10,7 +10,7 @@ args:
         short: d
         long: debug
         help: "Print additional debug information"
-    - api:
+    - gitlab_url:
         required: true
         takes_value: true
         multiple: false
@@ -20,8 +20,13 @@ args:
         takes_value: true
         multiple: false
         index: 2
-    - rocket_token:
+    - rocket_chat_url:
         required: true
         takes_value: true
         multiple: false
         index: 3
+    - rocket_chat_token:
+        required: true
+        takes_value: true
+        multiple: false
+        index: 4

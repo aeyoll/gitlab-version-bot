@@ -31,14 +31,16 @@ fn app() -> Result<(), Error> {
 
     clogger::set_verbosity(log_verbosity);
 
-    let api = matches.value_of("api").unwrap().to_string();
+    let gitlab_url = matches.value_of("gitlab_url").unwrap().to_string();
     let gitlab_token = matches.value_of("gitlab_token").unwrap().to_string();
-    let rocket_token = matches.value_of("rocket_token").unwrap().to_string();
+    let rocket_chat_url = matches.value_of("rocket_chat_url").unwrap().to_string();
+    let rocket_chat_token = matches.value_of("rocket_chat_token").unwrap().to_string();
 
     let bot = Bot {
-        api: api,
+        gitlab_url: gitlab_url,
         gitlab_token: gitlab_token,
-        rocket_token: rocket_token,
+        rocket_chat_url: rocket_chat_url,
+        rocket_chat_token: rocket_chat_token
     };
     bot.exec()?;
 
