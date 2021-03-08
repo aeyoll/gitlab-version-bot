@@ -2,9 +2,9 @@
 name = "gitlab-version-bot"
 version = "0.1.0"
 authors = ["Jean-Philippe Bidegain <jp@bidega.in>"]
+description = "Post a message to a Rocket.Chat webbook if a Gitlab instance needs to be updated."
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "MIT"
 
 [dependencies]
 ureq = { version = "*", features = ["json"] }
