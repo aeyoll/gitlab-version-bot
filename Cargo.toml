@@ -8,7 +8,7 @@ license = "MIT"
 repository = "https://github.com/aeyoll/gitlab-version-bot"
 
 [dependencies]
-ureq = { version = "*", features = ["json"] }
+ureq = { version = "2.0", features = ["json"] }
 clap = { version = "2.33", features = ["yaml"]}
 log = { version = "0.4" }
 clogger = { version = "0.1" }
