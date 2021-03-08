@@ -1,6 +1,6 @@
 # Gitlab version bot
 
-Post a message to a Rocket.Chat webbook is a Gitlab instance needs to be updated.
+Post a message to a Rocket.Chat webbook if a Gitlab instance needs to be updated.
 
 Usage
 ---
