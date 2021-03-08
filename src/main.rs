@@ -7,7 +7,7 @@ extern crate clogger;
 extern crate log;
 
 use crate::bot::Bot;
-use ureq::Error;
+use failure::Error;
 use std::process;
 
 mod bot;

@@ -1,21 +1,52 @@
-use ureq::Error;
+use failure::Error;
 use std::fmt;
 
-use serde::{Deserialize};
+use serde::Deserialize;
 
 #[derive(Deserialize)]
 struct GitlabVersion {
     version: String,
-    revision: String,
+}
+
+impl GitlabVersion {
+    pub fn new(version: String) -> Self {
+        GitlabVersion { version }
+    }
 }
 
 impl fmt::Display for GitlabVersion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "{{ version: \"{}\", revision: \"{}\" }}",
-            self.version, self.revision,
-        )
+        write!(f, "{}", self.version,)
+    }
+}
+
+#[derive(Deserialize)]
+struct GitlabTag {
+    name: String,
+}
+
+impl GitlabTag {
+    pub fn get_lastest_version() -> Result<GitlabVersion, Error> {
+        let url = "https://gitlab.com/api/v4/projects/13083/repository/tags";
+
+        let mut tags: Vec<GitlabTag> = ureq::get(&url).call()?.into_json()?;
+
+        tags.sort_by(|a, b| b.name.cmp(&a.name));
+
+        let mut stable_tags = tags
+            .into_iter()
+            .filter(|tag| tag.name.contains("rc") == false)
+            .map(|tag| GitlabVersion::new(tag.name.replace("v", "")));
+
+        let latest_version = stable_tags.nth(0).unwrap();
+
+        Ok(latest_version)
+    }
+}
+
+impl fmt::Display for GitlabTag {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{{ name: \"{}\" }}", self.name,)
     }
 }
 
@@ -56,9 +87,7 @@ impl Bot {
         );
 
         let _response = ureq::post(&request_url)
-            .send_json(ureq::json!({
-                "text": message
-            }))?
+            .send_json(ureq::json!({ "text": message }))?
             .into_string()?;
 
         Ok(())
@@ -70,12 +99,15 @@ impl Bot {
         debug!("Using api token: {}", self.gitlab_token);
         debug!("Using rocket token: {}", self.rocket_token);
 
+        let gitlab_latest_version = GitlabTag::get_lastest_version()?;
+        info!("Latest Gitlab version is {}", gitlab_latest_version);
+
         let version = self.get_version()?;
-        info!("Found version: {}", version);
+        info!("Current Gitlab version is {}", version);
 
         // if version.len() != 0 {
-            // message = format!("Aujourd'hui, {api_message}", api_message = message);
-            // self.publish_message(&message)?;
+        // message = format!("Aujourd'hui, {api_message}", api_message = message);
+        // self.publish_message(&message)?;
         // }
 
         Ok(())
